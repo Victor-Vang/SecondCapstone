@@ -89,7 +89,7 @@ namespace TenmoClient
 
             if (menuSelection == 4)
             {
-                // Send TE bucks
+                SendMoney();
             }
 
             if (menuSelection == 5)
@@ -174,6 +174,27 @@ namespace TenmoClient
                 if (account != null)
                 {
                     Console.WriteLine($"Your current account balance is: {account.Balance.ToString("C")}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Unable to retrieve balance: " + ex.Message);
+            }
+            console.Pause();
+        }
+
+        public void SendMoney()
+        {
+           
+            try
+            {
+                List<ApiUser> users = tenmoApiService.GetUsers();
+                Console.WriteLine("Id   |   UserName");
+                foreach (ApiUser user in users)
+                {
+                    Console.WriteLine($"{user.UserId}  |    {user.Username}");
+                    
                 }
             }
             catch (Exception ex)
