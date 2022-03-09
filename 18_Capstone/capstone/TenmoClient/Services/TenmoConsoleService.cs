@@ -6,6 +6,8 @@ namespace TenmoClient.Services
 {
     public class TenmoConsoleService : ConsoleService
     {
+        private TenmoApiService tenmoApiService = new TenmoApiService();
+
         /************************************************************
             Print methods
         ************************************************************/
@@ -51,8 +53,15 @@ namespace TenmoClient.Services
             return loginUser;
         }
 
-        // Add application-specific UI methods here...
+        //Add application-specific UI methods here...
 
+        public void GetBalance()
+        {
+            try
+            {
+                Account account = TenmoApiService.GetAccount();
+            }
+        }
 
     }
 }
