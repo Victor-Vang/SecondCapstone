@@ -6,7 +6,7 @@ namespace TenmoClient.Services
 {
     public class TenmoConsoleService : ConsoleService
     {
-        private TenmoApiService tenmoApiService = new TenmoApiService();
+        private TenmoApiService tenmoApiService;
 
         /************************************************************
             Print methods
@@ -59,9 +59,18 @@ namespace TenmoClient.Services
         {
             try
             {
-                Account account = TenmoApiService.GetAccount();
+                Account account = tenmoApiService.GetAccount();
+
+                Console.WriteLine();
+                Console.WriteLine();
+
+                Console.WriteLine($"Your current account balance is: {account.Balance : C}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Unable to retrieve balance: " + ex.Message);
             }
         }
-
     }
 }

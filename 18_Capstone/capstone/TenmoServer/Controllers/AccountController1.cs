@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TenmoServer.Models;
+using TenmoServer.DAO;
 
 namespace TenmoServer.Controllers
 {
@@ -13,17 +14,17 @@ namespace TenmoServer.Controllers
     [Authorize]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountDAO accountDAO;
-        public AccountController(IAccountDAO accountDAO)
+        private readonly IAccountDao accountDAO;
+        public AccountController(IAccountDao accountDAO)
         {
             this.accountDAO = accountDAO;
         }
 
-        // GET: /account
-        [HttpGet]
-        public ActionResult<Account> GetAccount()
+        // GET: /account/userId
+        [HttpGet("{userId}")]
+        public ActionResult<Account> GetAccount(int userId)
         {
-            Account account = accountDAO.GetAccount();
+            Account account = accountDAO.GetAccount(userId);
             if (account == null)
             {
                 return NotFound();

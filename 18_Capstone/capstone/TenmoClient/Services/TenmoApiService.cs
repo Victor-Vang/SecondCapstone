@@ -7,7 +7,7 @@ namespace TenmoClient.Services
 {
     public class TenmoApiService : AuthenticatedApiService
     {
-        public readonly string ApiUrl;
+        public string ApiUrl;
 
         public TenmoApiService(string apiUrl) : base(apiUrl) { }
 

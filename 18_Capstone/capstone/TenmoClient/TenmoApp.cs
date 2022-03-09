@@ -73,6 +73,7 @@ namespace TenmoClient
 
             if (menuSelection == 1)
             {
+                console.GetBalance();
                 // View your current balance
             }
 
