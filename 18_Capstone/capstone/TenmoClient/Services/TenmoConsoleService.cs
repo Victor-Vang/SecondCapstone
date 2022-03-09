@@ -57,9 +57,11 @@ namespace TenmoClient.Services
 
         public void GetBalance()
         {
+            Account account = null;
+
             try
             {
-                Account account = tenmoApiService.GetAccount();
+                account = tenmoApiService.GetAccount();
 
                 Console.WriteLine();
                 Console.WriteLine();
