@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace TenmoServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/")]
     [ApiController]
     public class HomeController : ControllerBase
     {
+        [HttpGet]
+        public string Ready()
+        {
+            return "The server is ready.";
+        }
     }
 }
