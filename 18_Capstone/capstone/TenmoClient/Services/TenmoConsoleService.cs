@@ -57,7 +57,7 @@ namespace TenmoClient.Services
 
         public void GetBalance()
         {
-            Account account = null;
+            Account account = new Account();
 
             try
             {
