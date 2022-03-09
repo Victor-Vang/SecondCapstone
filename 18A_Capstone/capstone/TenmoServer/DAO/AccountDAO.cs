@@ -19,7 +19,7 @@ namespace TenmoServer.DAO
 
         public Account GetAccount(int userId)
         {
-            Account account = null;
+            Account returnAccount = null;
 
             try
             {
@@ -33,7 +33,7 @@ namespace TenmoServer.DAO
 
                     if (reader.Read())
                     {
-                        account = GetAccountFromReader(reader);
+                        returnAccount = GetAccountFromReader(reader);
                     }
                 }
             }
@@ -42,7 +42,7 @@ namespace TenmoServer.DAO
                 throw;
             }
 
-            return account;
+            return returnAccount;
         }
         private Account GetAccountFromReader(SqlDataReader reader)
         {

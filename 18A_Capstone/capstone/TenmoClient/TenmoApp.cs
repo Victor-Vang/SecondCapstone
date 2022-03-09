@@ -73,6 +73,7 @@ namespace TenmoClient
 
             if (menuSelection == 1)
             {
+                GetBalance();
                 // View your current balance
             }
 
@@ -155,6 +156,30 @@ namespace TenmoClient
             catch (Exception)
             {
                 console.PrintError("Registration was unsuccessful.");
+            }
+            console.Pause();
+        }
+        public void GetBalance()
+        {
+            //LoginUser loginUser = console.PromptForLogin();
+            ////ApiUser user = tenmoApiService.Login(loginUser);
+            ////int userId = user.UserId;
+
+            int userId = tenmoApiService.UserId;
+
+            try
+            {
+                Account account = tenmoApiService.GetAccount(userId);
+
+                if (account != null)
+                {
+                    Console.WriteLine($"Your current account balance is: {account.Balance.ToString("C")}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Unable to retrieve balance: " + ex.Message);
             }
             console.Pause();
         }
