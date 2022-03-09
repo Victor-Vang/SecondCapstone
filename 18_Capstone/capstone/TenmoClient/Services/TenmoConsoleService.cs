@@ -6,6 +6,8 @@ namespace TenmoClient.Services
 {
     public class TenmoConsoleService : ConsoleService
     {
+        private TenmoApiService tenmoApiService;
+
         /************************************************************
             Print methods
         ************************************************************/
@@ -51,8 +53,26 @@ namespace TenmoClient.Services
             return loginUser;
         }
 
-        // Add application-specific UI methods here...
+        //Add application-specific UI methods here...
 
+        public void GetBalance()
+        {
+            Account account = null;
 
+            try
+            {
+                account = tenmoApiService.GetAccount();
+
+                Console.WriteLine();
+                Console.WriteLine();
+
+                Console.WriteLine($"Your current account balance is: {account.Balance : C}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Unable to retrieve balance: " + ex.Message);
+            }
+        }
     }
 }
