@@ -193,7 +193,11 @@ namespace TenmoClient
                 Console.WriteLine("Id   |   UserName");
                 foreach (ApiUser user in users)
                 {
-                    Console.WriteLine($"{user.UserId}  |    {user.Username}");
+                    if (user.UserId != tenmoApiService.UserId)
+                    {
+                        Console.WriteLine($"{user.UserId}  |    {user.Username}");
+                    }
+                    
                     
                 }
             }
@@ -202,7 +206,28 @@ namespace TenmoClient
                 Console.WriteLine();
                 Console.WriteLine("Unable to retrieve balance: " + ex.Message);
             }
-            console.Pause();
+            Console.WriteLine("Enter Id of user you are sending money to: ");
+            int userInput = int.Parse(Console.ReadLine()); // reciversId
+            Console.WriteLine("Enter amount you want to send: " );
+            decimal cashInput = decimal.Parse(Console.ReadLine());
+
+            int userId = tenmoApiService.UserId;
+
+            Account account = tenmoApiService.GetAccount(userId); //senders Id
+
+            
+
+            if (cashInput > account.Balance)
+            {
+                Console.WriteLine("Insufficient Balance");
+            }
+            if(cashInput <= 0)
+            {
+                Console.WriteLine("Please Enter posistive number: ");
+            }
+            Account reciversAccount = tenmoApiService.GetAccount(userInput);
+
+
         }
     }
 }

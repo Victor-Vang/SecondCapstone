@@ -12,6 +12,9 @@ namespace TenmoServer.DAO
         private readonly string connectionString;
 
         private string sqlGetAccount = "SELECT * FROM account WHERE user_id = @user_id;";
+
+        private string sqlUpdateAccount = "UPDATE account SET balance = @balance WHERE user_id = @senderId" +
+                                            "UPDATE account SET balance = @balance WHERE user_id = @recieverId";
         public AccountDao(string connectionString)
         {
             this.connectionString = connectionString;
@@ -44,7 +47,30 @@ namespace TenmoServer.DAO
 
             return returnAccount;
         }
+        public Account Update(int senderId, int recieverId, decimal moneySent)
+        {
+            Account reciever = GetAccount(recieverId);
+            if (reciever != null)
+            {
+                reciever.Balance += moneySent;
 
+            }
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sqlUpdateAccount, conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@balance", );
+                }
+            }
+            
+            
+            
+            
+        }
 
         private Account GetAccountFromReader(SqlDataReader reader)
         {

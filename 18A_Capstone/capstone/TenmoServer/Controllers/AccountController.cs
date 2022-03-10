@@ -37,8 +37,17 @@ namespace TenmoServer.Controllers
             }
         }
 
-        //[HttpGet()]
-       
+        [HttpPut("{userId}")]
+       public ActionResult<Account> UpdateAccount (int userId, decimal moneySent)
+        {
+            Account existingAccount = accountDAO.GetAccount(userId);
+                if (existingAccount == null)
+                {
+                return NotFound();
+                }
+            Account result = accountDAO.UpdateAccount(userId, moneySent);
+            return Ok(result);
+        }
 
     }
 }
