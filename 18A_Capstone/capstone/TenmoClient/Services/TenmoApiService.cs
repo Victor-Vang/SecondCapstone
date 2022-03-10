@@ -31,6 +31,20 @@ namespace TenmoClient.Services
 
             return response.Data;
         }
+        public Transfer AddTransfer(Transfer transfer)
+        {
+            //new rest to post transfer
+        }
+
+        //change to update transfer
+        //public Account UpdateBalance(Account account)
+        //{
+        //    RestRequest request = new RestRequest($"account/{account.AccountId}");
+        //    request.AddJsonBody(account);
+        //    IRestResponse<Account> response = client.Put<Account>(request);
+        //    CheckForError(response);
+        //    return response.Data;
+        //}
 
         private void CheckResult(IRestResponse<Account> response)
         {

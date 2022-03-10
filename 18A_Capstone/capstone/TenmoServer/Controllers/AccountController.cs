@@ -12,7 +12,7 @@ namespace TenmoServer.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountDao accountDAO;
@@ -38,14 +38,14 @@ namespace TenmoServer.Controllers
         }
 
         [HttpPut("{userId}")]
-       public ActionResult<Account> UpdateAccount (int userId, decimal moneySent)
+        public ActionResult<Account> UpdateAccount(int userId, Account account)
         {
             Account existingAccount = accountDAO.GetAccount(userId);
-                if (existingAccount == null)
-                {
+            if (existingAccount == null)
+            {
                 return NotFound();
-                }
-            Account result = accountDAO.UpdateAccount(userId, moneySent);
+            }
+            Account result = accountDAO.UpdateAccount(account);
             return Ok(result);
         }
 

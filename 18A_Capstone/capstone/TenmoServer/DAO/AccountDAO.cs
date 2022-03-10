@@ -13,8 +13,10 @@ namespace TenmoServer.DAO
 
         private string sqlGetAccount = "SELECT * FROM account WHERE user_id = @user_id;";
 
-        private string sqlUpdateAccount = "UPDATE account SET balance = @balance WHERE user_id = @senderId" +
-                                            "UPDATE account SET balance = @balance WHERE user_id = @recieverId";
+        private string sqlUpdateAccount = "UPDATE account" + 
+                                            "SET balance = @balance, account_id = @accountId" +
+                                            "WHERE user_id = @userId";
+                                            
         public AccountDao(string connectionString)
         {
             this.connectionString = connectionString;
@@ -47,29 +49,33 @@ namespace TenmoServer.DAO
 
             return returnAccount;
         }
-        public Account Update(int senderId, int recieverId, decimal moneySent)
+        public Account Update(Account updated)
         {
-            Account reciever = GetAccount(recieverId);
-            if (reciever != null)
-            {
-                reciever.Balance += moneySent;
-
-            }
-
+            
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(sqlUpdateAccount, conn);
-                    cmd.Parameters.AddWithValue("@user_id", userId);
-                    cmd.Parameters.AddWithValue("@balance", );
+                    cmd.Parameters.AddWithValue("@userId", updated.UserId);
+                    cmd.Parameters.AddWithValue("@accountId", updated.AccountId);
+                    cmd.Parameters.AddWithValue("@ballance", updated.Balance);
+                    int count = cmd.ExecuteNonQuery();
+                    if (count > 0)
+                    {
+                        return updated;
+                    }
+
+
                 }
             }
+            catch (SqlException)
+            {
+                throw;
+            }
             
-            
-            
-            
+           
         }
 
         private Account GetAccountFromReader(SqlDataReader reader)

@@ -198,9 +198,25 @@ namespace TenmoClient
                     Account sender = tenmoApiService.GetAccount(userId);
                     if (receiver != null)
                     {
+                        Transfer transfer = new Transfer();
+                        
                         decimal moneyToBeSent = console.PromptForMoneyAmount(sender, receiver);
+                        if (moneyToBeSent == 0)
+                        {
+                            console.PrintError("Invalid amount");
+                        }
+                        transfer.Amount = moneyToBeSent;
+                        transfer.AccountFrom = sender.AccountId;
+                        transfer.AccountTo = receiver.AccountId;
+
+
                     }
                 }
+            }
+           catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Error: " + ex.Message);
             }
             //catch (Exception ex)
             //{

@@ -124,10 +124,11 @@ namespace TenmoClient.Services
 
             if (IsValidBalance(moneyToBeSent, sender) == true)
             {
+                return moneyToBeSent;
 
             }
 
-            return 0.00M;
+            return 0;
         }
     }
 }

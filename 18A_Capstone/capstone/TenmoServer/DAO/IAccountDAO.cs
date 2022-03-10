@@ -7,6 +7,6 @@ namespace TenmoServer.DAO
     {
         Account GetAccount(int userId);
 
-        Account UpdateAccount(int userId, decimal moneySent);
+        bool UpdateAccount(Account updated);
     }
 }
