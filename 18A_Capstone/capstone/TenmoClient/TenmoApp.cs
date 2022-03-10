@@ -161,10 +161,6 @@ namespace TenmoClient
         }
         public void GetBalance()
         {
-            //LoginUser loginUser = console.PromptForLogin();
-            ////ApiUser user = tenmoApiService.Login(loginUser);
-            ////int userId = user.UserId;
-
             int userId = tenmoApiService.UserId;
 
             try
@@ -186,46 +182,50 @@ namespace TenmoClient
 
         public void SendMoney()
         {
-           
+            int userId = tenmoApiService.UserId;
+
             try
             {
                 List<ApiUser> users = tenmoApiService.GetUsers();
-                Console.WriteLine("Id   |   UserName");
-                foreach (ApiUser user in users)
+                if (users != null)
                 {
-                    if (user.UserId != tenmoApiService.UserId)
+                    int receiverId = console.PromptForReceiverId(users);
+                    if (receiverId == 0)
                     {
-                        Console.WriteLine($"{user.UserId}  |    {user.Username}");
+                        return;
                     }
-                    
-                    
+                    Account receiver = tenmoApiService.GetAccount(receiverId);
+                    Account sender = tenmoApiService.GetAccount(userId);
+                    if (receiver != null)
+                    {
+                        decimal moneyToBeSent = console.PromptForMoneyAmount(sender, receiver);
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Unable to retrieve balance: " + ex.Message);
-            }
-            Console.WriteLine("Enter Id of user you are sending money to: ");
-            int userInput = int.Parse(Console.ReadLine()); // reciversId
-            Console.WriteLine("Enter amount you want to send: " );
-            decimal cashInput = decimal.Parse(Console.ReadLine());
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine();
+            //    Console.WriteLine("Unable to retrieve balance: " + ex.Message);
+            //}
+            //int userInput = int.Parse(Console.ReadLine()); // reciversId
+            //Console.WriteLine("Enter amount you want to send: ");
+            //decimal cashInput = decimal.Parse(Console.ReadLine());
 
-            int userId = tenmoApiService.UserId;
+            //int userId = tenmoApiService.UserId;
 
-            Account account = tenmoApiService.GetAccount(userId); //senders Id
+            //Account account = tenmoApiService.GetAccount(userId); //senders Id
 
-            
 
-            if (cashInput > account.Balance)
-            {
-                Console.WriteLine("Insufficient Balance");
-            }
-            if(cashInput <= 0)
-            {
-                Console.WriteLine("Please Enter posistive number: ");
-            }
-            Account reciversAccount = tenmoApiService.GetAccount(userInput);
+
+            //if (cashInput > account.Balance)
+            //{
+            //    Console.WriteLine("Insufficient Balance");
+            //}
+            //if (cashInput <= 0)
+            //{
+            //    Console.WriteLine("Please Enter posistive number: ");
+            //}
+            //Account reciversAccount = tenmoApiService.GetAccount(userInput);
 
 
         }
