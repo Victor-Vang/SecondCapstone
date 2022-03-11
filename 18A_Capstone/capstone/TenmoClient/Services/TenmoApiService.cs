@@ -45,7 +45,7 @@ namespace TenmoClient.Services
             return response.Data;
         }
 
-        public Account UpdateSender(Transfer transfer, ApiUser sender)
+        public Account UpdateSender(Transfer transfer, Account sender)
         {
             RestRequest request = new RestRequest($"account/{sender.UserId}");
             request.AddJsonBody(sender);
@@ -56,7 +56,7 @@ namespace TenmoClient.Services
             return response.Data;
         }
         
-        public Account UpdateReceiver(Transfer transfer, ApiUser receiver)
+        public Account UpdateReceiver(Transfer transfer, Account receiver)
         {
             RestRequest request = new RestRequest($"account/{receiver.UserId}");
             request.AddJsonBody(receiver);

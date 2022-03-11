@@ -14,7 +14,7 @@ namespace TenmoServer.DAO
         private string sqlGetAccount = "SELECT * FROM account WHERE user_id = @user_id;";
 
         private string sqlUpdateAccount = "UPDATE account" + 
-                                            "SET balance = @balance, account_id = @accountId" +
+                                            "SET balance = @balance" +
                                             "WHERE user_id = @userId";
                                             
         public AccountDao(string connectionString)
@@ -34,8 +34,9 @@ namespace TenmoServer.DAO
 
                     SqlCommand cmd = new SqlCommand(sqlGetAccount, conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
+                    
                     SqlDataReader reader = cmd.ExecuteReader();
-
+                   
                     if (reader.Read())
                     {
                         returnAccount = GetAccountFromReader(reader);

@@ -37,31 +37,31 @@ namespace TenmoServer.Controllers
             }
         }
 
-        [HttpPut("{userId}")]
-        public ActionResult<Account> UpdateSender(Account updatedSender, int senderId)
-        {
-            Account existingSender = accountDAO.GetAccount(senderId);
-            if (existingSender == null)
-            {
-                return NotFound();
-            }
+        //[HttpPut("{userId}")]
+        //public ActionResult<Account> UpdateSender(Account updatedSender, int senderId)
+        //{
+        //    Account existingSender = accountDAO.GetAccount(senderId);
+        //    if (existingSender == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            Account result = accountDAO.Update(updatedSender, senderId);
-            return Ok(result);
-        } 
+        //    Account result = accountDAO.Update(updatedSender, senderId);
+        //    return Ok(result);
+        //} 
         
-        [HttpPut("{userId}")]
-        public ActionResult<Account> UpdateReceiver(Account updatedReceiver, int receiverId)
-        {
-            Account existingReceiver = accountDAO.GetAccount(receiverId);
-            if (existingReceiver == null)
-            {
-                return NotFound();
-            }
+        //[HttpPut("{userId}")]
+        //public ActionResult<Account> UpdateReceiver(Account updatedReceiver, int receiverId)
+        //{
+        //    Account existingReceiver = accountDAO.GetAccount(receiverId);
+        //    if (existingReceiver == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            Account result = accountDAO.Update(updatedReceiver, receiverId);
-            return Ok(result);
-        }
+        //    Account result = accountDAO.Update(updatedReceiver, receiverId);
+        //    return Ok(result);
+        //}
 
 
 
