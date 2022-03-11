@@ -6,7 +6,6 @@ namespace TenmoServer.DAO
     public interface IAccountDao
     {
         Account GetAccountByUserId(int userId);
-        Account GetAccountByAccountId(int accountId);
-        Account UpdateAccount(Account account);
+        bool UpdateAccountBalances(Transfer transfer);
     }
 }

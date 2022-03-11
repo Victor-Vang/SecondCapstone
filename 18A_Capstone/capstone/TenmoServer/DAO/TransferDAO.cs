@@ -42,19 +42,5 @@ namespace TenmoServer.DAO
                 return result;
             }
         }
-
-
-
-        //private Account GetAccountFromReader(SqlDataReader reader)
-        //{
-        //    Account account = new Account()
-        //    {
-        //        AccountId = Convert.ToInt32(reader["account_id"]),
-        //        UserId = Convert.ToInt32(reader["user_id"]),
-        //        Balance = Convert.ToDecimal(reader["balance"]),
-        //    };
-
-        //    return account;
-        //}
     }
 }

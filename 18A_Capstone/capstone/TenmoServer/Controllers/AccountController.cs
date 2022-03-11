@@ -12,7 +12,7 @@ namespace TenmoServer.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountDao accountDAO;
@@ -21,7 +21,6 @@ namespace TenmoServer.Controllers
             this.accountDAO = accountDAO;
         }
 
-        // GET: /account/userId
         [HttpGet("{userId}")]
         public ActionResult<Account> GetAccountByUserId(int userId)
         {
@@ -36,53 +35,21 @@ namespace TenmoServer.Controllers
                 return Ok(account);
             }
         }
-        
-        // GET: /account/accountId
-        //[HttpGet("{accountId}")]
-        //public ActionResult<Account> GetAccountByAccountId(int accountId)
-        //{
-        //    Account account = accountDAO.GetAccountByAccountId(accountId);
-
-        //    if (account == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        return Ok(account);
-        //    }
-        //}
 
         [HttpPut("{accountId}")]
-        public ActionResult UpdateSender(Transfer transfer)
+        public ActionResult<bool> UpdateSender(Transfer transfer)
         {
-          accountDAO.UpdateAccountBalance()
+            bool result = accountDAO.UpdateAccountBalances(transfer);
+
+            if (result)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound(result);
+            }
+
         }
-        
-        //[HttpPut("{accountId}")]
-        //public ActionResult UpdateSender(Transfer transfer)
-        //{
-        //    Account existingSender = accountDAO.GetAccountByAccountId(transfer.AccountFrom);
-
-        //    if (existingSender == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    existingSender.Balance -= transfer.Amount;
-        //    Account result = accountDAO.UpdateAccount(existingSender);
-            
-        //    Account existingReceiver = accountDAO.GetAccountByAccountId(transfer.AccountTo);
-
-        //    if (existingReceiver == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    existingReceiver.Balance += transfer.Amount;
-        //    Account secondResult = accountDAO.UpdateAccount(existingReceiver);
-
-        //    return Ok();
-        //}
     }
 }
