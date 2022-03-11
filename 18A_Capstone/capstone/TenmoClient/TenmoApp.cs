@@ -165,7 +165,7 @@ namespace TenmoClient
 
             try
             {
-                Account account = tenmoApiService.GetAccount(userId);
+                Account account = tenmoApiService.GetAccountByUserId(userId);
 
                 if (account != null)
                 {
@@ -196,8 +196,8 @@ namespace TenmoClient
                         console.PrintError("User does not exist.");
                     }
 
-                    Account sender = tenmoApiService.GetAccount(userId);
-                    Account receiver = tenmoApiService.GetAccount(receiverId);
+                    Account sender = tenmoApiService.GetAccountByUserId(userId);
+                    Account receiver = tenmoApiService.GetAccountByUserId(receiverId);
 
                     if (receiver != null)
                     {
@@ -214,8 +214,7 @@ namespace TenmoClient
                             transfer.AccountFrom = sender.AccountId;
                             transfer.AccountTo = receiver.AccountId;
 
-                            tenmoApiService.UpdateSender(transfer, sender);
-                            tenmoApiService.UpdateReceiver(transfer, receiver);
+                            tenmoApiService.UpdateAccountBalances(transfer);
                         }
                     }
                 }

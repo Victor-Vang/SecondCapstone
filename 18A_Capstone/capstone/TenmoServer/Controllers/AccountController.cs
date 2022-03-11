@@ -23,9 +23,9 @@ namespace TenmoServer.Controllers
 
         // GET: /account/userId
         [HttpGet("{userId}")]
-        public ActionResult<Account> GetAccount(int userId)
+        public ActionResult<Account> GetAccountByUserId(int userId)
         {
-            Account account = accountDAO.GetAccount(userId);
+            Account account = accountDAO.GetAccountByUserId(userId);
 
             if (account == null)
             {
@@ -36,46 +36,53 @@ namespace TenmoServer.Controllers
                 return Ok(account);
             }
         }
-
-        //[HttpPut("{userId}")]
-        //public ActionResult<Account> UpdateSender(Account updatedSender, int senderId)
+        
+        // GET: /account/accountId
+        //[HttpGet("{accountId}")]
+        //public ActionResult<Account> GetAccountByAccountId(int accountId)
         //{
-        //    Account existingSender = accountDAO.GetAccount(senderId);
+        //    Account account = accountDAO.GetAccountByAccountId(accountId);
+
+        //    if (account == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        return Ok(account);
+        //    }
+        //}
+
+        [HttpPut("{accountId}")]
+        public ActionResult UpdateSender(Transfer transfer)
+        {
+          accountDAO.UpdateAccountBalance()
+        }
+        
+        //[HttpPut("{accountId}")]
+        //public ActionResult UpdateSender(Transfer transfer)
+        //{
+        //    Account existingSender = accountDAO.GetAccountByAccountId(transfer.AccountFrom);
+
         //    if (existingSender == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    Account result = accountDAO.Update(updatedSender, senderId);
-        //    return Ok(result);
-        //} 
-        
-        //[HttpPut("{userId}")]
-        //public ActionResult<Account> UpdateReceiver(Account updatedReceiver, int receiverId)
-        //{
-        //    Account existingReceiver = accountDAO.GetAccount(receiverId);
+        //    existingSender.Balance -= transfer.Amount;
+        //    Account result = accountDAO.UpdateAccount(existingSender);
+            
+        //    Account existingReceiver = accountDAO.GetAccountByAccountId(transfer.AccountTo);
+
         //    if (existingReceiver == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    Account result = accountDAO.Update(updatedReceiver, receiverId);
-        //    return Ok(result);
+        //    existingReceiver.Balance += transfer.Amount;
+        //    Account secondResult = accountDAO.UpdateAccount(existingReceiver);
+
+        //    return Ok();
         //}
-
-
-
-        //[HttpPut("{userId}")]
-        //public ActionResult<Account> UpdateAccount(int userId, Account account)
-        //{
-        //    Account existingAccount = accountDAO.GetAccount(userId);
-        //    if (existingAccount == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    Account result = accountDAO.UpdateAccount(account);
-        //    return Ok(result);
-        //}
-
     }
 }
