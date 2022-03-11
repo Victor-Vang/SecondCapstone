@@ -49,34 +49,35 @@ namespace TenmoServer.DAO
 
             return returnAccount;
         }
-        public Account Update(Account updated)
-        {
+
+        //public Account Update(Account updated)
+        //{
             
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand(sqlUpdateAccount, conn);
-                    cmd.Parameters.AddWithValue("@userId", updated.UserId);
-                    cmd.Parameters.AddWithValue("@accountId", updated.AccountId);
-                    cmd.Parameters.AddWithValue("@ballance", updated.Balance);
-                    int count = cmd.ExecuteNonQuery();
-                    if (count > 0)
-                    {
-                        return updated;
-                    }
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
+        //            SqlCommand cmd = new SqlCommand(sqlUpdateAccount, conn);
+        //            cmd.Parameters.AddWithValue("@userId", updated.UserId);
+        //            cmd.Parameters.AddWithValue("@accountId", updated.AccountId);
+        //            cmd.Parameters.AddWithValue("@balance", updated.Balance);
+        //            int count = cmd.ExecuteNonQuery();
+        //            if (count > 0)
+        //            {
+        //                return updated;
+        //            }
 
 
-                }
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
+        //        }
+        //    }
+        //    catch (SqlException)
+        //    {
+        //        throw;
+        //    }
             
            
-        }
+        //}
 
         private Account GetAccountFromReader(SqlDataReader reader)
         {

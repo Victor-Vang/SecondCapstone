@@ -11,16 +11,18 @@ namespace TenmoClient.Services
 
         public TenmoApiService(string apiUrl) : base(apiUrl) { }
 
+
         // Add methods to call api here...
         public Account GetAccount(int userId)
         {
             RestRequest request = new RestRequest($"account/{userId}");
             IRestResponse<Account> response = client.Get<Account>(request);
 
-            CheckResult(response);
+            CheckForError(response);
 
             return response.Data;
         }
+
         public List<ApiUser> GetUsers()
         {
             List<ApiUser> users = new List<ApiUser>();
@@ -31,40 +33,38 @@ namespace TenmoClient.Services
 
             return response.Data;
         }
-        public Transfer AddTransfer(Transfer transfer)
+
+        public Transfer AddTransfer(Transfer newTransfer)
         {
-            //new rest to post transfer
+            RestRequest request = new RestRequest("transfer");
+            request.AddJsonBody(newTransfer);
+            IRestResponse<Transfer> response = client.Post<Transfer>(request);
+
+            CheckForError(response);
+
+            return response.Data;
         }
 
-        //change to update transfer
-        //public Account UpdateBalance(Account account)
-        //{
-        //    RestRequest request = new RestRequest($"account/{account.AccountId}");
-        //    request.AddJsonBody(account);
-        //    IRestResponse<Account> response = client.Put<Account>(request);
-        //    CheckForError(response);
-        //    return response.Data;
-        //}
-
-        private void CheckResult(IRestResponse<Account> response)
+        public Account UpdateSender(Transfer transfer, ApiUser sender)
         {
-            if (response.ResponseStatus != ResponseStatus.Completed)
-            {
-                throw new Exception("Error occurred - unable to reach server.");
-            }
-            else if ((int)response.StatusCode == 401)
-            {
-                throw new Exception("Error occurred - user not authorized - 401.");
-            }
-            else if ((int)response.StatusCode == 403)
-            {
-                throw new Exception("Error occurred - user forbidden - 403");
-            }
-            else if (!response.IsSuccessful)
-            {
-                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
-            }
-        }
+            RestRequest request = new RestRequest($"account/{sender.UserId}");
+            request.AddJsonBody(sender);
+            IRestResponse<Account> response = client.Put<Account>(request);
 
+            CheckForError(response);
+
+            return response.Data;
+        }
+        
+        public Account UpdateReceiver(Transfer transfer, ApiUser receiver)
+        {
+            RestRequest request = new RestRequest($"account/{receiver.UserId}");
+            request.AddJsonBody(receiver);
+            IRestResponse<Account> response = client.Put<Account>(request);
+
+            CheckForError(response);
+
+            return response.Data;
+        }
     }
 }

@@ -66,13 +66,14 @@ namespace TenmoClient.Services
         }
 
 
-        public void PrintUsers(List<ApiUser> users)
+        public void PrintUsers(List<ApiUser> users, int userId)
         {
+
             Console.WriteLine("Id   |   UserName");
 
             foreach (ApiUser user in users)
 
-                if (user.UserId != tenmoApiService.UserId)
+                if (user.UserId != userId)
                 {
                     Console.WriteLine($"{user.UserId}  |    {user.Username}");
                 }
@@ -98,9 +99,9 @@ namespace TenmoClient.Services
 
         // Add application-specific UI methods here...
 
-        public int PromptForReceiverId(List<ApiUser> users)
+        public int PromptForReceiverId(List<ApiUser> users, int userId)
         {
-            PrintUsers(users);
+            PrintUsers(users, userId);
             Console.WriteLine();
             while (true)
             {
@@ -117,17 +118,15 @@ namespace TenmoClient.Services
             }
         }
 
-        public decimal PromptForMoneyAmount(Account sender, Account receiver)
+        public decimal PromptForMoneyAmount(Account sender)
         {
             Console.WriteLine($"Enter amount to send: ");
-            decimal moneyToBeSent = Console.Read();
+            decimal moneyToBeSent = decimal.Parse(Console.ReadLine());
 
             if (IsValidBalance(moneyToBeSent, sender) == true)
             {
                 return moneyToBeSent;
-
             }
-
             return 0;
         }
     }

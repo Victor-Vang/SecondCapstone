@@ -6,7 +6,5 @@ namespace TenmoServer.DAO
     public interface IAccountDao
     {
         Account GetAccount(int userId);
-
-        bool UpdateAccount(Account updated);
     }
 }

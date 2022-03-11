@@ -183,67 +183,51 @@ namespace TenmoClient
         public void SendMoney()
         {
             int userId = tenmoApiService.UserId;
+            Transfer transfer = new Transfer();
 
             try
             {
                 List<ApiUser> users = tenmoApiService.GetUsers();
                 if (users != null)
                 {
-                    int receiverId = console.PromptForReceiverId(users);
-                    if (receiverId == 0)
+                    int receiverId = console.PromptForReceiverId(users, userId);
+                    if (receiverId <= 0)
                     {
-                        return;
+                        console.PrintError("User does not exist.");
                     }
-                    Account receiver = tenmoApiService.GetAccount(receiverId);
+
                     Account sender = tenmoApiService.GetAccount(userId);
+                    Account receiver = tenmoApiService.GetAccount(receiverId);
+
                     if (receiver != null)
                     {
-                        Transfer transfer = new Transfer();
-                        
-                        decimal moneyToBeSent = console.PromptForMoneyAmount(sender, receiver);
+
+                        decimal moneyToBeSent = console.PromptForMoneyAmount(sender);
+
                         if (moneyToBeSent == 0)
                         {
                             console.PrintError("Invalid amount");
                         }
-                        transfer.Amount = moneyToBeSent;
-                        transfer.AccountFrom = sender.AccountId;
-                        transfer.AccountTo = receiver.AccountId;
+                        else
+                        {
+                            transfer.Amount = moneyToBeSent;
+                            transfer.AccountFrom = sender.AccountId;
+                            transfer.AccountTo = receiver.AccountId;
 
-
+                            tenmoApiService.UpdateSender(transfer, sender);
+                            tenmoApiService.UpdateReceiver(transfer, receiver);
+                        }
                     }
                 }
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine();
                 Console.WriteLine("Error: " + ex.Message);
             }
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine();
-            //    Console.WriteLine("Unable to retrieve balance: " + ex.Message);
-            //}
-            //int userInput = int.Parse(Console.ReadLine()); // reciversId
-            //Console.WriteLine("Enter amount you want to send: ");
-            //decimal cashInput = decimal.Parse(Console.ReadLine());
+            tenmoApiService.AddTransfer(transfer);
 
-            //int userId = tenmoApiService.UserId;
-
-            //Account account = tenmoApiService.GetAccount(userId); //senders Id
-
-
-
-            //if (cashInput > account.Balance)
-            //{
-            //    Console.WriteLine("Insufficient Balance");
-            //}
-            //if (cashInput <= 0)
-            //{
-            //    Console.WriteLine("Please Enter posistive number: ");
-            //}
-            //Account reciversAccount = tenmoApiService.GetAccount(userInput);
-
-
+            console.Pause();
         }
     }
 }

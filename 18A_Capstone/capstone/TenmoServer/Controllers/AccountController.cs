@@ -38,16 +38,44 @@ namespace TenmoServer.Controllers
         }
 
         [HttpPut("{userId}")]
-        public ActionResult<Account> UpdateAccount(int userId, Account account)
+        public ActionResult<Account> UpdateSender(Account updatedSender, int senderId)
         {
-            Account existingAccount = accountDAO.GetAccount(userId);
-            if (existingAccount == null)
+            Account existingSender = accountDAO.GetAccount(senderId);
+            if (existingSender == null)
             {
                 return NotFound();
             }
-            Account result = accountDAO.UpdateAccount(account);
+
+            Account result = accountDAO.Update(updatedSender, senderId);
+            return Ok(result);
+        } 
+        
+        [HttpPut("{userId}")]
+        public ActionResult<Account> UpdateReceiver(Account updatedReceiver, int receiverId)
+        {
+            Account existingReceiver = accountDAO.GetAccount(receiverId);
+            if (existingReceiver == null)
+            {
+                return NotFound();
+            }
+
+            Account result = accountDAO.Update(updatedReceiver, receiverId);
             return Ok(result);
         }
+
+
+
+        //[HttpPut("{userId}")]
+        //public ActionResult<Account> UpdateAccount(int userId, Account account)
+        //{
+        //    Account existingAccount = accountDAO.GetAccount(userId);
+        //    if (existingAccount == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Account result = accountDAO.UpdateAccount(account);
+        //    return Ok(result);
+        //}
 
     }
 }
