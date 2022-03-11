@@ -37,5 +37,19 @@ namespace TenmoServer.Controllers
                 return NotFound(result);
             }
         }
+
+        [HttpGet]
+        public ActionResult<List<Transfer>> GetTransfers(Account account)
+        {
+            List<Transfer> transfers = transferDAO.GetTransfers(account);
+            if (transfers.Count == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(transfers);
+            }
+        }
     }
 }

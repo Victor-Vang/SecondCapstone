@@ -191,10 +191,11 @@ namespace TenmoClient
                 if (users != null)
                 {
                     int receiverId = console.PromptForReceiverId(users, userId);
-                    if (receiverId <= 0)
+                    if (receiverId == 0)
                     {
-                        console.PrintError("User does not exist.");
+                        return;
                     }
+                    
 
                     Account sender = tenmoApiService.GetAccountByUserId(userId);
                     Account receiver = tenmoApiService.GetAccountByUserId(receiverId);
@@ -207,6 +208,14 @@ namespace TenmoClient
                         if (moneyToBeSent == 0)
                         {
                             console.PrintError("Invalid amount");
+                            console.Pause();
+                            return;
+                        }
+                        if (moneyToBeSent == -1)
+                        {
+                            console.PrintError("Insufficient funds in your account");
+                            console.Pause();
+                            return;
                         }
                         else
                         {

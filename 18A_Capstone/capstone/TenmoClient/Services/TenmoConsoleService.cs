@@ -36,12 +36,17 @@ namespace TenmoClient.Services
             Console.WriteLine("---------");
         }
 
-        public bool IsValidUserId(List<ApiUser> users, int receiverId)
+        public bool IsValidUserId(List<ApiUser> users, int receiverId, int userId)
         {
             if (users == null)
             {
                 return false;
             }
+            if (userId == receiverId)
+            {
+                return false;
+            }
+           
             foreach (ApiUser user in users)
             {
                 if (user.UserId == receiverId)
@@ -69,7 +74,9 @@ namespace TenmoClient.Services
         public void PrintUsers(List<ApiUser> users, int userId)
         {
 
-            Console.WriteLine("Id   |   UserName");
+            Console.WriteLine("------------Users--------------");
+            Console.WriteLine(" Id   |   UserName");
+            Console.WriteLine("--------------------------------");
 
             foreach (ApiUser user in users)
 
@@ -77,6 +84,7 @@ namespace TenmoClient.Services
                 {
                     Console.WriteLine($"{user.UserId}  |    {user.Username}");
                 }
+            Console.WriteLine("--------------------------------");
         }
 
 
@@ -105,12 +113,14 @@ namespace TenmoClient.Services
             Console.WriteLine();
             while (true)
             {
-                int receiverId = PromptForInteger($"Id of the user you are sending to [0]: ");
+                int receiverId = PromptForInteger($"Id of the user you are sending to [0]");
                 if (receiverId == 0)
                 {
                     return 0;
                 }
-                if (IsValidUserId(users, receiverId))
+               
+               
+                if (IsValidUserId(users, receiverId, userId))
                 {
                     return receiverId;
                 }
@@ -120,12 +130,16 @@ namespace TenmoClient.Services
 
         public decimal PromptForMoneyAmount(Account sender)
         {
-            Console.WriteLine($"Enter amount to send: ");
+            Console.Write($"Enter amount to send: ");
             decimal moneyToBeSent = decimal.Parse(Console.ReadLine());
 
             if (IsValidBalance(moneyToBeSent, sender) == true)
             {
                 return moneyToBeSent;
+            }
+            if (IsValidBalance(moneyToBeSent, sender)== false)
+            {
+                return -1;
             }
             return 0;
         }
