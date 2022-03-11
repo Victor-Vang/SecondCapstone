@@ -50,10 +50,9 @@ namespace TenmoServer.DAO
             return returnAccount;
         }
         
-        public bool UpdateAccountBalances(Transfer transfer)
+        public Transfer UpdateAccountBalances(Transfer transfer)
         {
-            Transfer updated = transfer;
-            bool completed = false;
+            Transfer updated = null; ;
 
             try
             {
@@ -62,14 +61,14 @@ namespace TenmoServer.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sqlUpdateAccountBalances, conn);
-                    cmd.Parameters.AddWithValue("@amount", updated.Amount);
-                    cmd.Parameters.AddWithValue("@senderAccountId", updated.AccountFrom);
-                    cmd.Parameters.AddWithValue("@receiverAccountId", updated.AccountTo);
+                    cmd.Parameters.AddWithValue("@amount", transfer.Amount);
+                    cmd.Parameters.AddWithValue("@senderAccountId", transfer.AccountFrom);
+                    cmd.Parameters.AddWithValue("@receiverAccountId", transfer.AccountTo);
 
                     int count = cmd.ExecuteNonQuery();
                     if (count > 0)
                     {
-                        completed = true;
+                        updated = transfer;
                     }
                 }
             }
@@ -77,7 +76,7 @@ namespace TenmoServer.DAO
             {
                 throw;
             }
-            return completed;
+            return updated;
         }
 
         private Account GetAccountFromReader(SqlDataReader reader)

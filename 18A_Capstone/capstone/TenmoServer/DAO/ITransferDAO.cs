@@ -5,6 +5,6 @@ namespace TenmoServer.DAO
 {
     public interface ITransferDao
     {
-        bool AddTransfer(Transfer transfer);
+        Transfer AddTransfer(Transfer transfer);
     }
 }

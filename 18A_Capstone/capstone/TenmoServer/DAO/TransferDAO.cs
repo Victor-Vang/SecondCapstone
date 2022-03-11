@@ -18,9 +18,10 @@ namespace TenmoServer.DAO
             this.connectionString = connectionString;
         }
        
-        public bool AddTransfer(Transfer transfer)
+        public Transfer AddTransfer(Transfer transfer)
         {
-            bool result = false;
+            //bool result = false;
+            Transfer addedTransfer = null;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -37,9 +38,9 @@ namespace TenmoServer.DAO
 
                 if (count > 0)
                 {
-                    result = true;
+                    addedTransfer = transfer;
                 }
-                return result;
+                return addedTransfer;
             }
         }
     }

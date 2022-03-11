@@ -36,18 +36,18 @@ namespace TenmoServer.Controllers
             }
         }
 
-        [HttpPut("{accountId}")]
-        public ActionResult<bool> UpdateSender(Transfer transfer)
+        [HttpPut]
+        public ActionResult<Transfer> UpdateSender(Transfer transfer)
         {
-            bool result = accountDAO.UpdateAccountBalances(transfer);
+            Transfer updated = accountDAO.UpdateAccountBalances(transfer);
 
-            if (result)
+            if (updated != null)
             {
-                return Ok(result);
+                return Ok(updated);
             }
             else
             {
-                return NotFound(result);
+                return NotFound(updated);
             }
 
         }

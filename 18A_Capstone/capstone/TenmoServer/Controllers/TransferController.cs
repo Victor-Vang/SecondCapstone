@@ -24,11 +24,11 @@ namespace TenmoServer.Controllers
         }
 
         [HttpPost]
-        public ActionResult<bool> AddTransfer(Transfer transfer)
+        public ActionResult<Transfer> AddTransfer(Transfer transfer)
         {
-            bool result = transferDao.AddTransfer(transfer);
+            Transfer result = transferDao.AddTransfer(transfer);
 
-            if (result)
+            if (result != null)
             {
                 return Ok(result);
             }
