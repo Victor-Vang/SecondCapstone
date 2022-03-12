@@ -35,6 +35,19 @@ namespace TenmoServer.Controllers
                 return Ok(account);
             }
         }
+        [HttpGet]
+        public ActionResult<List<Account>> GetAccounts()
+        {
+            List<Account> accounts = accountDAO.GetAccounts();
+            if (accounts.Count == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(accounts);
+            }
+        }
 
         [HttpPut]
         public ActionResult<Transfer> UpdateSender(Transfer transfer)

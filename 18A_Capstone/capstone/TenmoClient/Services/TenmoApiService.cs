@@ -26,7 +26,7 @@ namespace TenmoClient.Services
         public List<ApiUser> GetUsers()
         {
             List<ApiUser> users = new List<ApiUser>();
-            RestRequest request = new RestRequest($"user");
+            RestRequest request = new RestRequest("user");
             IRestResponse<List<ApiUser>> response = client.Get<List<ApiUser>>(request);
 
             CheckForError(response);
@@ -54,6 +54,25 @@ namespace TenmoClient.Services
             CheckForError(response);
         }
 
-        // get transfers with account
+        public List<Transfer> GetTransfers()
+        {
+            List<Transfer> transfers = new List<Transfer>();
+            RestRequest request = new RestRequest("transfer");
+            IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
+
+            CheckForError(response);
+
+            return response.Data;
+        }
+        public List<Account> GetAccounts()
+        {
+            List<Account> accounts = new List<Account>();
+            RestRequest request = new RestRequest("account");
+            IRestResponse<List<Account>> response = client.Get<List<Account>>(request);
+
+            CheckForError(response);
+
+            return response.Data;
+        }
     }
 }

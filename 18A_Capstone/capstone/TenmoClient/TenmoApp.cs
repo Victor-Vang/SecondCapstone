@@ -79,6 +79,7 @@ namespace TenmoClient
 
             if (menuSelection == 2)
             {
+                ListTransfers();
                 // View your past transfers
             }
 
@@ -236,6 +237,29 @@ namespace TenmoClient
             tenmoApiService.AddTransfer(transfer);
 
             console.Pause();
+        }
+        public void ListTransfers()
+        {
+            List<ApiUser> users = tenmoApiService.GetUsers();
+            List<Account> accounts = tenmoApiService.GetAccounts();
+
+            
+            
+                List<Transfer> transfers = tenmoApiService.GetTransfers();
+                if (transfers != null)
+                {
+                    int userId = tenmoApiService.UserId;
+                    console.PrintTransfers(transfers, users, userId, accounts);
+                }
+
+
+            
+            
+            
+
+            
+
+
         }
     }
 }
