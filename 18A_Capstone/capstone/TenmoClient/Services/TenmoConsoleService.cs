@@ -131,6 +131,7 @@ namespace TenmoClient.Services
         public decimal PromptForMoneyAmount(Account sender)
         {
             Console.Write($"Enter amount to send: ");
+
             decimal moneyToBeSent = decimal.Parse(Console.ReadLine());
 
             if (IsValidBalance(moneyToBeSent, sender) == true)
@@ -164,7 +165,7 @@ namespace TenmoClient.Services
                             username = account.Username;
                         }
                     }
-                    Console.WriteLine($"{transfer.TransferId}      From{username}      ${transfer.Amount}");
+                    Console.WriteLine($"{transfer.TransferId}      From {username}      ${transfer.Amount}");
                 }
                 if (transfer.AccountFrom == accountId)
                 {
@@ -175,11 +176,78 @@ namespace TenmoClient.Services
                             username = account.Username;
                         }
                     }
-                    Console.WriteLine($"{transfer.TransferId}      To{username}      ${transfer.Amount}");
+                    Console.WriteLine($"{transfer.TransferId}      To {username}      ${transfer.Amount}");
                 }
                 Console.WriteLine($" ");
             }
-            Console.ReadLine();
+
+            
+            
+            
+            
         }
+        public void PrintTransferDetails(List<Transfer> transfers, List<Account> accounts, int accountId, string username)
+        {
+            Console.Write("Please enter transfer ID to view details (0 to cancel): ");
+            int transferId = int.Parse(Console.ReadLine());
+            string otherUser = null; 
+            foreach (Transfer transfer in transfers)
+            {
+                if (transferId == transfer.TransferId)
+                {
+                    Console.WriteLine("---------------------");
+                    Console.WriteLine("Transfer Details");
+                    Console.WriteLine("---------------------");
+                    Console.WriteLine($"ID: {transfer.TransferId}");
+                    if (transfer.AccountTo == accountId)
+                    {
+                        foreach (Account account in accounts)
+                        {
+                            if (account.AccountId == transfer.AccountFrom)
+                            {
+                                otherUser = account.Username;
+                            }
+                            
+                            
+                           
+                        }
+                        Console.WriteLine($"From: {otherUser}");
+                        Console.WriteLine($"To: {username}");
+                        Console.WriteLine($"Type: Send");
+                        Console.WriteLine($"Status: Approved");
+                        Console.WriteLine($"Amount: ${transfer.Amount}");
+                    }
+                    if (transfer.AccountFrom == accountId)
+                    {
+                        foreach (Account account in accounts)
+                        {
+                            if (account.AccountId == transfer.AccountTo)
+                            {
+                                otherUser = account.Username;
+                            }
+
+
+
+                        }
+                        Console.WriteLine($"From: {username}");
+                        Console.WriteLine($"To: {otherUser}");
+                        Console.WriteLine($"Type: Send");
+                        Console.WriteLine($"Status: Approved");
+                        Console.WriteLine($"Amount: ${transfer.Amount}");
+                    }
+                }
+                if(transferId == 0)
+                {
+                    return;
+                }
+                if (transferId != transfer.TransferId)
+                {
+                    PrintError("Invalid Transfer ID");
+                }
+            }
+            
+        }
+
+
     }
 }

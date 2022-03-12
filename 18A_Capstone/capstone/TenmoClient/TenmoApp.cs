@@ -248,7 +248,9 @@ namespace TenmoClient
             {
                 int userId = tenmoApiService.UserId;
                 console.PrintTransfers(transfers, user.AccountId, accounts);
+                console.PrintTransferDetails(transfers, accounts, user.AccountId, tenmoApiService.Username);
             }
+            console.Pause();
         }
     }
 }
