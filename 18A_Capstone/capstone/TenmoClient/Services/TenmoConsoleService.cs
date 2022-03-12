@@ -138,21 +138,12 @@ namespace TenmoClient.Services
             Console.Write($"Enter amount to send: ");
             string input = Console.ReadLine();
 
-<<<<<<< HEAD
+
             decimal moneyToBeSent;
             bool isValid = decimal.TryParse(input, out moneyToBeSent);
 
-            if (isValid)
-            {
+           
 
-                return 0;
-            }
-=======
-            string input = Console.ReadLine();
-            decimal moneyToBeSent;
-
-            bool isValid = decimal.TryParse(input, out moneyToBeSent);
->>>>>>> e5df1804881eb6662308473620f6b12eab11c027
 
             if (isValid == true)
             {
