@@ -196,7 +196,7 @@ namespace TenmoClient
                     {
                         return;
                     }
-                    
+
 
                     Account sender = tenmoApiService.GetAccountByUserId(userId);
                     Account receiver = tenmoApiService.GetAccountByUserId(receiverId);
@@ -240,26 +240,15 @@ namespace TenmoClient
         }
         public void ListTransfers()
         {
-            List<ApiUser> users = tenmoApiService.GetUsers();
             List<Account> accounts = tenmoApiService.GetAccounts();
+            Account user = tenmoApiService.GetAccountByUserId(tenmoApiService.UserId);
+            List<Transfer> transfers = tenmoApiService.GetTransfers(user.AccountId);
 
-            
-            
-                List<Transfer> transfers = tenmoApiService.GetTransfers();
-                if (transfers != null)
-                {
-                    int userId = tenmoApiService.UserId;
-                    console.PrintTransfers(transfers, users, userId, accounts);
-                }
-
-
-            
-            
-            
-
-            
-
-
+            if (transfers != null)
+            {
+                int userId = tenmoApiService.UserId;
+                console.PrintTransfers(transfers, user.AccountId, accounts);
+            }
         }
     }
 }

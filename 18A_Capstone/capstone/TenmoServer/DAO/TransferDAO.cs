@@ -45,7 +45,7 @@ namespace TenmoServer.DAO
             }
         }
 
-        public List<Transfer> GetTransfers(Account account)
+        public List<Transfer> GetTransfers(int accountId)
         {
             List<Transfer> transfers = new List<Transfer>();
             try
@@ -55,7 +55,7 @@ namespace TenmoServer.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sqlGetTransfers, conn);
-                    cmd.Parameters.AddWithValue("@accountId", account.AccountId);
+                    cmd.Parameters.AddWithValue("@accountId", accountId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -63,9 +63,7 @@ namespace TenmoServer.DAO
                     {
                         Transfer transfer = TransferReader(reader);
                         transfers.Add(transfer);
-
                     }
-
                 }
             }
             catch (Exception ex)
@@ -74,6 +72,7 @@ namespace TenmoServer.DAO
             }
             return transfers;
         }
+
         private Transfer TransferReader(SqlDataReader reader)
         {
             Transfer transfer = new Transfer();
@@ -82,7 +81,7 @@ namespace TenmoServer.DAO
             transfer.TransferStatusId = Convert.ToInt32(reader["transfer_status_id"]);
             transfer.AccountFrom = Convert.ToInt32(reader["account_from"]);
             transfer.AccountTo = Convert.ToInt32(reader["account_to"]);
-            transfer.Amount = Convert.ToDecimal(reader["amount_id"]);
+            transfer.Amount = Convert.ToDecimal(reader["amount"]);
             return transfer;
         }
     }

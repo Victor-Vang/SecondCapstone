@@ -16,7 +16,7 @@ namespace TenmoServer.DAO
         private string sqlUpdateAccountBalances = "UPDATE account SET balance = (balance - @amount) WHERE account_id = @senderAccountId; " +
             "UPDATE account SET balance = (balance + @amount) WHERE account_id = @receiverAccountId;";
 
-        private string sqlGetAccounts = " SELECT account_id, a.user_id, username FROM account a JOIN tenmo_user tu ON a.user_id = tu.user_id";
+        private string sqlGetAccounts = " SELECT account_id, a.user_id, username, balance FROM account a JOIN tenmo_user tu ON a.user_id = tu.user_id";
                                             
         public AccountDao(string connectionString)
         {
@@ -115,7 +115,7 @@ namespace TenmoServer.DAO
             {
                 AccountId = Convert.ToInt32(reader["account_id"]),
                 UserId = Convert.ToInt32(reader["user_id"]),
-                //Balance = Convert.ToDecimal(reader["balance"]),
+                Balance = Convert.ToDecimal(reader["balance"]),
                 Username = Convert.ToString(reader["username"])
             };
             return account;

@@ -54,10 +54,10 @@ namespace TenmoClient.Services
             CheckForError(response);
         }
 
-        public List<Transfer> GetTransfers()
+        public List<Transfer> GetTransfers(int accountId)
         {
             List<Transfer> transfers = new List<Transfer>();
-            RestRequest request = new RestRequest("transfer");
+            RestRequest request = new RestRequest($"transfer/{accountId}");
             IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
 
             CheckForError(response);

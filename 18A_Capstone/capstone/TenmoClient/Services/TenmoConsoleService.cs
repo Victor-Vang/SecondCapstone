@@ -144,7 +144,7 @@ namespace TenmoClient.Services
             return 0;
         }
 
-        public void PrintTransfers(List<Transfer> transfers, List<ApiUser> users, int userId, List<Account> accounts)
+        public void PrintTransfers(List<Transfer> transfers, int accountId, List<Account> accounts)
         {
             Console.WriteLine("-------------------------");
             Console.WriteLine("Transfers");
@@ -153,13 +153,9 @@ namespace TenmoClient.Services
 
             string username = "";
 
-
-
-
-
             foreach (Transfer transfer in transfers)
             {
-                if (transfer.AccountTo == userId)
+                if (transfer.AccountTo == accountId)
                 {
                     foreach (Account account in accounts)
                     {
@@ -168,10 +164,9 @@ namespace TenmoClient.Services
                             username = account.Username;
                         }
                     }
-
                     Console.WriteLine($"{transfer.TransferId}      From{username}      ${transfer.Amount}");
                 }
-                if (transfer.AccountFrom == userId)
+                if (transfer.AccountFrom == accountId)
                 {
                     foreach (Account account in accounts)
                     {
@@ -182,13 +177,9 @@ namespace TenmoClient.Services
                     }
                     Console.WriteLine($"{transfer.TransferId}      To{username}      ${transfer.Amount}");
                 }
-                    
-                   
-                
-
                 Console.WriteLine($" ");
             }
-
+            Console.ReadLine();
         }
     }
 }
