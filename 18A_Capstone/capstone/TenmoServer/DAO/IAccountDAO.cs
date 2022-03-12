@@ -7,5 +7,6 @@ namespace TenmoServer.DAO
     {
         Account GetAccountByUserId(int userId);
         Transfer UpdateAccountBalances(Transfer transfer);
+        List<Account> GetAccounts();
     }
 }

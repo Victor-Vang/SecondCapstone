@@ -46,7 +46,7 @@ namespace TenmoClient.Services
             {
                 return false;
             }
-           
+
             foreach (ApiUser user in users)
             {
                 if (user.UserId == receiverId)
@@ -56,7 +56,7 @@ namespace TenmoClient.Services
             }
             return false;
         }
-        
+
         public bool IsValidBalance(decimal moneyToBeSent, Account sender)
         {
 
@@ -118,8 +118,8 @@ namespace TenmoClient.Services
                 {
                     return 0;
                 }
-               
-               
+
+
                 if (IsValidUserId(users, receiverId, userId))
                 {
                     return receiverId;
@@ -137,11 +137,58 @@ namespace TenmoClient.Services
             {
                 return moneyToBeSent;
             }
-            if (IsValidBalance(moneyToBeSent, sender)== false)
+            if (IsValidBalance(moneyToBeSent, sender) == false)
             {
                 return -1;
             }
             return 0;
+        }
+
+        public void PrintTransfers(List<Transfer> transfers, List<ApiUser> users, int userId, List<Account> accounts)
+        {
+            Console.WriteLine("-------------------------");
+            Console.WriteLine("Transfers");
+            Console.WriteLine("ID       From/To         Amount");
+            Console.WriteLine("---------------------------");
+
+            string username = "";
+
+
+
+
+
+            foreach (Transfer transfer in transfers)
+            {
+                if (transfer.AccountTo == userId)
+                {
+                    foreach (Account account in accounts)
+                    {
+                        if (account.AccountId == transfer.AccountFrom)
+                        {
+                            username = account.Username;
+                        }
+                    }
+
+                    Console.WriteLine($"{transfer.TransferId}      From{username}      ${transfer.Amount}");
+                }
+                if (transfer.AccountFrom == userId)
+                {
+                    foreach (Account account in accounts)
+                    {
+                        if (account.AccountId == transfer.AccountTo)
+                        {
+                            username = account.Username;
+                        }
+                    }
+                    Console.WriteLine($"{transfer.TransferId}      To{username}      ${transfer.Amount}");
+                }
+                    
+                   
+                
+
+                Console.WriteLine($" ");
+            }
+
         }
     }
 }
