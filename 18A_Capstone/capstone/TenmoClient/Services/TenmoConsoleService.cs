@@ -131,8 +131,16 @@ namespace TenmoClient.Services
         public decimal PromptForMoneyAmount(Account sender)
         {
             Console.Write($"Enter amount to send: ");
+            string input = Console.ReadLine();
 
-            decimal moneyToBeSent = decimal.Parse(Console.ReadLine());
+            decimal moneyToBeSent;
+            bool isValid = decimal.TryParse(input, out moneyToBeSent);
+
+            if (isValid)
+            {
+
+                return 0;
+            }
 
             if (IsValidBalance(moneyToBeSent, sender) == true)
             {
