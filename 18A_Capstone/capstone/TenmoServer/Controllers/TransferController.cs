@@ -41,7 +41,7 @@ namespace TenmoServer.Controllers
         [HttpGet]
         public ActionResult<List<Transfer>> GetTransfers(Account account)
         {
-            List<Transfer> transfers = transferDAO.GetTransfers(account);
+            List<Transfer> transfers = transferDao.GetTransfers(account);
             if (transfers.Count == 0)
             {
                 return NotFound();
