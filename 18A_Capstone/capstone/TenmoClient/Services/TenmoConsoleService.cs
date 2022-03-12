@@ -70,21 +70,20 @@ namespace TenmoClient.Services
             }
         }
 
-
         public void PrintUsers(List<ApiUser> users, int userId)
         {
 
-            Console.WriteLine("------------Users--------------");
-            Console.WriteLine(" Id   |   UserName");
-            Console.WriteLine("--------------------------------");
+            Console.WriteLine("|------------ Users --------------|");
+            Console.WriteLine("|   Id | UserName                 |");
+            Console.WriteLine("|------+--------------------------|");
 
             foreach (ApiUser user in users)
 
                 if (user.UserId != userId)
                 {
-                    Console.WriteLine($"{user.UserId}  |    {user.Username}");
+                    Console.WriteLine($"|{user.UserId.ToString().PadLeft(5, ' ')} | {user.Username.ToString().PadRight(25, ' ')}|");
                 }
-            Console.WriteLine("--------------------------------");
+            Console.WriteLine("|---------------------------------|");
         }
 
 
@@ -124,7 +123,13 @@ namespace TenmoClient.Services
                 {
                     return receiverId;
                 }
-                PrintError("This is not a valid user ID number.");
+
+                if (receiverId == userId)
+                {
+                    return -1;
+                }
+
+                PrintError("This is not a valid user Id number.");
             }
         }
 
@@ -133,6 +138,7 @@ namespace TenmoClient.Services
             Console.Write($"Enter amount to send: ");
             string input = Console.ReadLine();
 
+<<<<<<< HEAD
             decimal moneyToBeSent;
             bool isValid = decimal.TryParse(input, out moneyToBeSent);
 
@@ -141,24 +147,37 @@ namespace TenmoClient.Services
 
                 return 0;
             }
+=======
+            string input = Console.ReadLine();
+            decimal moneyToBeSent;
 
-            if (IsValidBalance(moneyToBeSent, sender) == true)
+            bool isValid = decimal.TryParse(input, out moneyToBeSent);
+>>>>>>> e5df1804881eb6662308473620f6b12eab11c027
+
+            if (isValid == true)
             {
-                return moneyToBeSent;
+                if (IsValidBalance(moneyToBeSent, sender) == true)
+                {
+                    return moneyToBeSent;
+                }
+                if (IsValidBalance(moneyToBeSent, sender) == false)
+                {
+                    return -1;
+                }
             }
-            if (IsValidBalance(moneyToBeSent, sender) == false)
+            if (isValid == false)
             {
-                return -1;
+                return 0;
             }
             return 0;
         }
 
         public void PrintTransfers(List<Transfer> transfers, int accountId, List<Account> accounts)
         {
-            Console.WriteLine("-------------------------");
+            Console.WriteLine("---------------------------------------");
             Console.WriteLine("Transfers");
-            Console.WriteLine("ID       From/To         Amount");
-            Console.WriteLine("---------------------------");
+            Console.WriteLine("Id         From/To            Amount");
+            Console.WriteLine("---------------------------------------");
 
             string username = "";
 
@@ -173,7 +192,7 @@ namespace TenmoClient.Services
                             username = account.Username;
                         }
                     }
-                    Console.WriteLine($"{transfer.TransferId}      From {username}      ${transfer.Amount}");
+                    Console.WriteLine($"{transfer.TransferId.ToString().PadRight(11, ' ')}From: {username.ToString().PadRight(14, ' ')}{transfer.Amount.ToString("C")}");
                 }
                 if (transfer.AccountFrom == accountId)
                 {
@@ -184,29 +203,26 @@ namespace TenmoClient.Services
                             username = account.Username;
                         }
                     }
-                    Console.WriteLine($"{transfer.TransferId}      To {username}      ${transfer.Amount}");
+                    Console.WriteLine($"{transfer.TransferId.ToString().PadRight(11, ' ')}To: {username.ToString().PadRight(16, ' ')}{transfer.Amount.ToString("C")}");
                 }
-                Console.WriteLine($" ");
             }
-
-            
-            
-            
-            
         }
+
         public void PrintTransferDetails(List<Transfer> transfers, List<Account> accounts, int accountId, string username)
         {
             Console.Write("Please enter transfer ID to view details (0 to cancel): ");
             int transferId = int.Parse(Console.ReadLine());
-            string otherUser = null; 
+            string otherUser = null;
+
             foreach (Transfer transfer in transfers)
             {
                 if (transferId == transfer.TransferId)
                 {
-                    Console.WriteLine("---------------------");
+                    Console.WriteLine("--------------------------------------------");
                     Console.WriteLine("Transfer Details");
-                    Console.WriteLine("---------------------");
+                    Console.WriteLine("--------------------------------------------");
                     Console.WriteLine($"ID: {transfer.TransferId}");
+
                     if (transfer.AccountTo == accountId)
                     {
                         foreach (Account account in accounts)
@@ -215,16 +231,15 @@ namespace TenmoClient.Services
                             {
                                 otherUser = account.Username;
                             }
-                            
-                            
-                           
                         }
+
                         Console.WriteLine($"From: {otherUser}");
                         Console.WriteLine($"To: {username}");
                         Console.WriteLine($"Type: Send");
                         Console.WriteLine($"Status: Approved");
                         Console.WriteLine($"Amount: ${transfer.Amount}");
                     }
+
                     if (transfer.AccountFrom == accountId)
                     {
                         foreach (Account account in accounts)
@@ -233,9 +248,6 @@ namespace TenmoClient.Services
                             {
                                 otherUser = account.Username;
                             }
-
-
-
                         }
                         Console.WriteLine($"From: {username}");
                         Console.WriteLine($"To: {otherUser}");
@@ -243,19 +255,16 @@ namespace TenmoClient.Services
                         Console.WriteLine($"Status: Approved");
                         Console.WriteLine($"Amount: ${transfer.Amount}");
                     }
-                }
-                if(transferId == 0)
-                {
-                    return;
-                }
-                if (transferId != transfer.TransferId)
-                {
-                    PrintError("Invalid Transfer ID");
+                    if (transferId != transfer.TransferId)
+                    {
+                        PrintError("Invalid Transfer Id");
+                    }
                 }
             }
-            
+            if (transferId == 0)
+            {
+                return;
+            }
         }
-
-
     }
 }
