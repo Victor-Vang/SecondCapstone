@@ -176,7 +176,7 @@ namespace TenmoClient
             catch (Exception ex)
             {
                 Console.WriteLine();
-                Console.WriteLine("Unable to retrieve balance: " + ex.Message);
+                console.PrintError("Unable to retrieve balance: " + ex.Message);
             }
             console.Pause();
         }
@@ -196,6 +196,11 @@ namespace TenmoClient
                     {
                         return;
                     }
+                    if (receiverId == -1)
+                    {
+                        console.PrintError("You can't send money to yourself. Come on, John..");
+                        console.Pause();
+                    }
 
 
                     Account sender = tenmoApiService.GetAccountByUserId(userId);
@@ -208,13 +213,13 @@ namespace TenmoClient
 
                         if (moneyToBeSent == 0)
                         {
-                            console.PrintError("Invalid amount");
+                            console.PrintError("Invalid amount.");
                             console.Pause();
                             return;
                         }
                         if (moneyToBeSent == -1)
                         {
-                            console.PrintError("Insufficient funds in your account");
+                            console.PrintError("Insufficient funds in your account.");
                             console.Pause();
                             return;
                         }
